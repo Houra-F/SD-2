@@ -1,0 +1,62 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+// TODO : fungsi Iterative Binary Search
+int binarySearchIterative(int arr[], int n, int target){
+    int Left = 0, right = n - 1;
+    int step = 1; //hitung iterasi
+
+    while(Left <= right){//klau kiri melewati kanan data tsb tdk di temukn
+        int mid = (Left + right) / 2;
+
+        cout << "Iterasi ke- " << step++ << " : ";
+        cout << "left = " << Left << ", right = " << right << ", mid = " << mid;
+        cout << " -> arr[mid] = " << arr[mid] << endl;
+
+        //perbandingan
+        if (arr[mid] == target) //ascending = if (target < arr[mid])
+        return mid; //ditemukan
+        else if (target > arr[mid])
+            right = mid - 1; 
+        else
+            Left = mid + 1;
+    }
+    return -1; //data tidak ditemukan
+}
+
+
+int main() {
+    int n;
+    cout << "Masukkan jumlah elemen: ";
+    cin >> n;
+
+    int arr[n]; //simpan elemen di array
+    cout << "Masukkan " << n << " angka (acak):\n";
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+
+    //kalau ascending :
+    //sort(arr, arr + n);
+
+    //sorting angka yg acak jd descending
+    sort(arr, arr + n, greater<int>()); //pake greater krn mau ngurutin dr yg terbesar
+
+    cout << "\nData setelah diurutkan (descending): ";
+    for (int i = 0; i < n; i++) cout << arr[i] << " ";
+    cout << endl;
+
+    int target;
+    cout << "\nMasukkan angka yang ingin dicari: ";
+    cin >> target;
+
+    int hasil = binarySearchIterative(arr, n, target);
+
+    if (hasil != -1)
+        cout << "\nAngka " << target << " ditemukan di indeks ke-" << hasil << endl;
+    else
+        cout << "\nAngka " << target << " tidak ditemukan dalam array." << endl;
+
+    return 0;
+}
